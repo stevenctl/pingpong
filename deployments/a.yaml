@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpong-a
+  labels:
+    app: pingpong-a
+spec:
+  ports:
+    - port: 5000
+      name: tcp
+  selector:
+    app: pingpong-a
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpong-a-v1
+  labels:
+    app: pingpong-a
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong-a
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: pingpong-a
+        version: v1
+    spec:
+      containers:
+        - name: pingpong-a
+          image: slandow/pingpong:latest
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 5000
+---
