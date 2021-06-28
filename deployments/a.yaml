@@ -4,6 +4,7 @@ metadata:
   name: pingpong-a
   labels:
     app: pingpong-a
+    service: pingpong-a
 spec:
   ports:
     - port: 5000
